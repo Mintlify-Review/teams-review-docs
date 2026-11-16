@@ -9,7 +9,19 @@ The Acme API limits how many requests you can send each minute.
 
 | Limit | Value |
 | --- | --- |
-| Requests per minute | 120 |
-| Wait time after exceeding the limit | 60 seconds |
+| Requests per minute | 300 |
+| Wait time after exceeding the limit | 30 seconds |
 
-If you send more than 120 requests in a minute, wait 60 seconds before you send more requests.
+If you send more than 300 requests in a minute, wait 30 seconds before you send more requests.
+
+## Rate limit responses
+
+When you exceed the limit, the Acme API returns HTTP status `429 Too Many Requests`.
+
+Use these response headers to track your usage:
+
+| Header | Description |
+| --- | --- |
+| `X-RateLimit-Limit` | The number of requests you can send each minute. |
+| `X-RateLimit-Remaining` | The number of requests you have left in the current minute. |
+| `Retry-After` | The number of seconds to wait before you send more requests. This is `0` until you exceed the limit. |
